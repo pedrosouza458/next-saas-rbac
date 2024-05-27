@@ -2,6 +2,7 @@ import fastifyCors from '@fastify/cors'
 import fasitfyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
+import { env } from '@saas/env'
 import { fastify } from 'fastify'
 import {
   jsonSchemaTransform,
@@ -24,13 +25,20 @@ app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
 app.register(fastifySwagger, {
-  openapi: {
+  swagger: {
     info: {
       title: 'Next.js Saas',
       description: 'Full-stack SaaS app with multi-tenant and RBAC.',
       version: '1.0.0',
     },
-    servers: [],
+    securityDefinitions: {
+      Authorization: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'Authorization',
+        description: 'JWT obtained from authentication route.',
+      },
+    },
   },
   transform: jsonSchemaTransform,
 })
@@ -50,9 +58,9 @@ app.register(fastifySwaggerUi, {
 })
 
 app.register(fasitfyJwt, {
-  secret: 'my-jwt-secret',
+  secret: env.JWT_SECRET,
 })
 
-app.listen({ port: 3001 }).then(() => {
+app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('HTTP server running')
 })
