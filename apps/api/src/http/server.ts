@@ -18,6 +18,13 @@ import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
 import { requestPasswordRecover } from './routes/auth/request-password-recover'
 import { resetPassword } from './routes/auth/reset-password'
+import { createOrganization } from './routes/orgs/create-organization'
+import { deleteOrganization } from './routes/orgs/delete-organization'
+import { getMembership } from './routes/orgs/get-membership'
+import { getOrganization } from './routes/orgs/get-organization'
+import { getOrganizations } from './routes/orgs/get-organizations'
+import { transferOrganization } from './routes/orgs/transfer-organization'
+import { udpateOrganization } from './routes/orgs/update-organization'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -45,12 +52,27 @@ app.register(fastifySwagger, {
 })
 
 app.register(fastifyCors)
+
+/**
+ * Auth
+ */
 app.register(createAccount)
 app.register(authenticateWithPassword)
 app.register(getProfile)
 app.register(requestPasswordRecover)
 app.register(resetPassword)
 app.register(authenticateWithGithub)
+
+/**
+ * Organizations
+ */
+app.register(createOrganization)
+app.register(getMembership)
+app.register(getOrganization)
+app.register(getOrganizations)
+app.register(udpateOrganization)
+app.register(deleteOrganization)
+app.register(transferOrganization)
 
 app.setErrorHandler(errorHandler)
 
