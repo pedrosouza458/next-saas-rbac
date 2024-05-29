@@ -18,6 +18,9 @@ import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
 import { requestPasswordRecover } from './routes/auth/request-password-recover'
 import { resetPassword } from './routes/auth/reset-password'
+import { deleteMember } from './routes/members/delete-member'
+import { getMembers } from './routes/members/get-members'
+import { updateMember } from './routes/members/update-members'
 import { createOrganization } from './routes/orgs/create-organization'
 import { deleteOrganization } from './routes/orgs/delete-organization'
 import { getMembership } from './routes/orgs/get-membership'
@@ -92,6 +95,13 @@ app.register(deleteProject)
 app.register(getProject)
 app.register(getProjects)
 app.register(updateProject)
+
+/**
+ * Members
+ */
+app.register(getMembers)
+app.register(updateMember)
+app.register(deleteMember)
 
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
